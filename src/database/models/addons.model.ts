@@ -30,6 +30,7 @@ export class AddonsModel extends BaseModel {
 
     name: string;
     price: number;
+    description: string;
     brandId: string;
     categoryId: string;
 

@@ -21,9 +21,7 @@ const providers = [
         useFactory: async () => {
             const knex = Knex({
                 client: '',
-                connection: {
-
-                },
+                connection: {},
                 ...knexSnakeCaseMappers(),
             })
             Model.knex(knex) 
