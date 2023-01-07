@@ -3,7 +3,8 @@ import { knexSnakeCaseMappers } from 'objection'
 
 module.exports = {
     client: '',
-    connection: {},
+    connection: {
+    },
     migrations: {
         directory: './src/database/migrations',
         stub: './src/database/migration.stub',
