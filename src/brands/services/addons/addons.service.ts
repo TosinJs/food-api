@@ -3,7 +3,7 @@ import { DataError, ForeignKeyViolationError, ModelClass, UniqueViolationError }
 import { v4 as uuidv4 } from 'uuid';
 import { CreateAddonDto } from 'src/brands/dto/addons/create-addon.dto';
 import { UpdateAddonDto } from 'src/brands/dto/addons/update-addon.dto';
-import { AddonsModel } from 'src/database/models/addons.model';
+import { AddonsModel } from 'src/database/models/brands/addons.model';
 import { CategoriesService } from '../categories/categories.service';
 
 @Injectable()

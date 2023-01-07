@@ -1,9 +1,11 @@
 import { Module } from '@nestjs/common';
-import { UsersService } from './users.service';
+import { UsersService } from './services/users.service';
 import { UsersController } from './users.controller';
+import { JwtTokenService } from './services/jwt.service';
+import { EncryptService } from './services/encrypt.service';
 
 @Module({
   controllers: [UsersController],
-  providers: [UsersService]
+  providers: [UsersService, JwtTokenService, EncryptService]
 })
 export class UsersModule {}

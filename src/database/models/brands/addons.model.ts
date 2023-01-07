@@ -1,4 +1,4 @@
-import { BaseModel } from './base.model';
+import { BaseModel } from '../base.model';
 import { Model } from 'objection'
 import { BrandsModel } from "./brands.model";
 import { CategoriesModel } from "./categories.model";

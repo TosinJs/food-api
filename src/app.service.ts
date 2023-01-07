@@ -1,6 +1,6 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { ModelClass } from 'objection'
-import { BrandsModel } from './database/models/brands.model';
+import { BrandsModel } from './database/models/brands/brands.model';
 
 @Injectable()
 export class AppService {

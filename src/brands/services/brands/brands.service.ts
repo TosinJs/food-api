@@ -3,7 +3,7 @@ import { v4 as uuidv4 } from "uuid";
 import { CreateBrandDto } from '../../dto/brands/create-brand.dto';
 import { UpdateBrandDto } from '../../dto/brands/update-brand.dto';
 import { ModelClass, UniqueViolationError } from 'objection';
-import { BrandsModel } from 'src/database/models/brands.model';
+import { BrandsModel } from 'src/database/models/brands/brands.model';
 
 @Injectable()
 export class BrandsService {

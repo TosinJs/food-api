@@ -2,7 +2,7 @@ import { HttpException, HttpStatus, Inject, Injectable } from '@nestjs/common';
 import { DataError, ForeignKeyViolationError, ModelClass, UniqueViolationError } from 'objection';
 import { v4 as uuidv4 } from 'uuid';
 import { CreateCategoryDto } from 'src/brands/dto/categories/create-category.dto';
-import { CategoriesModel } from 'src/database/models/categories.model';
+import { CategoriesModel } from 'src/database/models/brands/categories.model';
 
 @Injectable()
 export class CategoriesService {

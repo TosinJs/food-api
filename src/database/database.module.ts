@@ -1,11 +1,12 @@
-import Knex  from 'knex'
-import { Model, knexSnakeCaseMappers } from 'objection'
-import { AddonsModel } from './models/addons.model';
-import { BrandsModel } from './models/brands.model';
-import { CategoriesModel } from './models/categories.model';
+import Knex  from 'knex';
+import { Model, knexSnakeCaseMappers } from 'objection';
+import { AddonsModel } from './models/brands/addons.model';
+import { BrandsModel } from './models/brands/brands.model';
+import { CategoriesModel } from './models/brands/categories.model';
+import { UsersModel } from './models/users/users.models';
 import { Global, Module } from '@nestjs/common';
 
-const models = [AddonsModel, BrandsModel, CategoriesModel]
+const models = [AddonsModel, BrandsModel, CategoriesModel, UsersModel]
 
 const modelProviders = models.map(model => {
     return {
