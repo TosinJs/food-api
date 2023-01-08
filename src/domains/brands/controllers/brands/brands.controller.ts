@@ -1,4 +1,11 @@
-import { Controller, Post, Body, HttpStatus } from '@nestjs/common';
+import {
+  Controller,
+  Post,
+  Body,
+  HttpStatus,
+  Get,
+  HttpException,
+} from '@nestjs/common';
 import { BrandsService } from '../../services/brands/brands.service';
 import { CreateBrandDto } from '../../dto/brands/create-brand.dto';
 import { createSuccessResponse } from 'src/utils/responseBuilder.utils';
@@ -20,5 +27,17 @@ export class BrandsController {
       'Success',
       await this.brandsService.create(createBrandDto),
     );
+  }
+
+  @Get()
+  @Roles(Role.Admin)
+  async findAll() {
+    const brands = await this.brandsService.findAll();
+    if (brands.length < 1) {
+      throw new HttpException('brands not found', HttpStatus.NOT_FOUND, {
+        cause: new Error('Brands Not Found'),
+      });
+    }
+    return createSuccessResponse(HttpStatus.OK, 'Success', brands);
   }
 }

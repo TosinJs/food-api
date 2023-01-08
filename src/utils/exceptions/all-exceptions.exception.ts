@@ -9,6 +9,7 @@ import {
 import { BaseExceptionFilter } from '@nestjs/core';
 import { Request, Response } from 'express';
 import process from 'process';
+import { ServiceError } from '../serviceErrorBuilder.utils';
 
 @Catch()
 export class AllExceptionsFilter implements ExceptionFilter {
@@ -17,7 +18,7 @@ export class AllExceptionsFilter implements ExceptionFilter {
     const response = ctx.getResponse<Response>();
     const request = ctx.getRequest<Request>();
 
-    const status =
+    let status =
       exception instanceof HttpException
         ? exception.getStatus()
         : HttpStatus.INTERNAL_SERVER_ERROR;
@@ -29,11 +30,17 @@ export class AllExceptionsFilter implements ExceptionFilter {
     if (exception instanceof BadRequestException) {
       message = exception.getResponse();
     }
+
+    if (exception instanceof ServiceError) {
+      message = exception.message;
+      status = exception.statusCode;
+    }
+
     const devResponse = {
       statusCode: status,
       timestamp: new Date().toISOString(),
       path: request.url,
-      trace: exception?.stack.split('/n'),
+      trace: exception?.stack?.split('/n'),
       error: exception,
     };
 

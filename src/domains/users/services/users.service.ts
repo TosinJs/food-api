@@ -1,4 +1,4 @@
-import { HttpException, HttpStatus, Inject, Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { v4 as uuidv4 } from 'uuid';
 import { CreateUserDto } from '../dto/create-user.dto';
 import { LoginUserDto } from '../dto/login-user.dto';
@@ -7,6 +7,11 @@ import { EncryptService } from './encrypt.service';
 import { JwtTokenService } from './jwt.service';
 import { Role } from 'src/types/enum';
 import { UsersModel } from '../database/models/users.models';
+import {
+  ConfilctError,
+  InternalServerError,
+  BadRequestError,
+} from 'src/utils/serviceErrorBuilder.utils';
 
 @Injectable()
 export class UsersService {
@@ -29,21 +34,16 @@ export class UsersService {
       await this.modelClass.query().insert(newUser).returning('*');
     } catch (error) {
       if (error instanceof UniqueViolationError) {
-        throw new HttpException(
+        throw new ConfilctError(
           'duplicate entry - this username already exists',
-          HttpStatus.CONFLICT,
-          { cause: error },
+          error,
         );
       } else {
-        throw new HttpException(
-          'Internal Server Error',
-          HttpStatus.INTERNAL_SERVER_ERROR,
-          { cause: error },
-        );
+        throw new InternalServerError(error);
       }
     }
 
-    const token = this.jwtService.generateIdToken(
+    const token = await this.jwtService.generateIdToken(
       {
         id: '1',
         username: createUserDto.username,
@@ -64,20 +64,20 @@ export class UsersService {
       .first();
 
     if (!result) {
-      throw new HttpException(
+      throw new BadRequestError(
         'Invalid Username or Password',
-        HttpStatus.BAD_REQUEST,
+        new Error('Invalid Login Credentials'),
       );
     }
 
     if (!(await this.encryptService.compare(result.password, password))) {
-      throw new HttpException(
+      throw new BadRequestError(
         'Invalid Username or Password',
-        HttpStatus.BAD_REQUEST,
+        new Error('Invalid Login Credentials'),
       );
     }
 
-    const token = this.jwtService.generateIdToken(
+    const token = await this.jwtService.generateIdToken(
       {
         id: '1',
         username: loginUserDto.username,

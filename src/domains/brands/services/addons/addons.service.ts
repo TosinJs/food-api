@@ -1,4 +1,4 @@
-import { HttpException, HttpStatus, Inject, Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import {
   DataError,
   ForeignKeyViolationError,
@@ -10,6 +10,11 @@ import { AddonsModel } from '../../database/models/addons.model';
 import { CreateAddonDto } from '../../dto/addons/create-addon.dto';
 import { UpdateAddonDto } from '../../dto/addons/update-addon.dto';
 import { CategoriesService } from '../categories/categories.service';
+import {
+  ConfilctError,
+  BadRequestError,
+  InternalServerError,
+} from 'src/utils/serviceErrorBuilder.utils';
 
 @Injectable()
 export class AddonsService {
@@ -57,47 +62,39 @@ export class AddonsService {
       return createdAddon;
     } catch (error) {
       if (error instanceof UniqueViolationError) {
-        throw new HttpException(
-          'duplicate entry - this addon already exists for the given brand',
-          HttpStatus.CONFLICT,
-          { cause: error },
+        throw new ConfilctError(
+          'duplicate entry - this category already exists for the given brand',
+          error,
         );
       } else if (
         error instanceof ForeignKeyViolationError ||
         error instanceof DataError
       ) {
-        throw new HttpException(
+        throw new BadRequestError(
           'invalid id - this brand does not exist',
-          HttpStatus.BAD_REQUEST,
-          { cause: error },
+          error,
         );
       } else {
-        throw new HttpException(
-          'Internal Server Error',
-          HttpStatus.INTERNAL_SERVER_ERROR,
-          { cause: error },
-        );
+        throw new InternalServerError(error);
       }
     }
   }
 
   async findAll(brandId: string): Promise<AddonsModel[]> {
     try {
-      const addons = await this.modelClass.query().where({ brandId });
+      const addons = await this.modelClass
+        .query()
+        .where('addons.brandId', brandId)
+        .withGraphFetched('categories');
       return addons;
     } catch (error) {
       if (error instanceof DataError) {
-        throw new HttpException(
+        throw new BadRequestError(
           'invalid id - this brand or addon does not exist',
-          HttpStatus.BAD_REQUEST,
-          { cause: error },
+          error,
         );
       } else {
-        throw new HttpException(
-          'Internal Server Error',
-          HttpStatus.INTERNAL_SERVER_ERROR,
-          { cause: error },
-        );
+        throw new InternalServerError(error);
       }
     }
   }
@@ -106,21 +103,17 @@ export class AddonsService {
     try {
       const res = await this.modelClass
         .query()
-        .findOne({ id: addonId, brandId });
+        .findOne({ id: addonId, brandId })
+        .withGraphFetched('categories');
       return res;
     } catch (error) {
       if (error instanceof DataError) {
-        throw new HttpException(
+        throw new BadRequestError(
           'invalid id - this brand or addon does not exist',
-          HttpStatus.BAD_REQUEST,
-          { cause: error },
+          error,
         );
       } else {
-        throw new HttpException(
-          'Internal Server Error',
-          HttpStatus.INTERNAL_SERVER_ERROR,
-          { cause: error },
-        );
+        throw new InternalServerError(error);
       }
     }
   }
@@ -165,17 +158,12 @@ export class AddonsService {
       return res;
     } catch (error) {
       if (error instanceof DataError) {
-        throw new HttpException(
+        throw new BadRequestError(
           'invalid id - this brand or addon does not exist',
-          HttpStatus.BAD_REQUEST,
-          { cause: error },
+          error,
         );
       } else {
-        throw new HttpException(
-          'Internal Server Error',
-          HttpStatus.INTERNAL_SERVER_ERROR,
-          { cause: error },
-        );
+        throw new InternalServerError(error);
       }
     }
   }
@@ -189,17 +177,12 @@ export class AddonsService {
       return res;
     } catch (error) {
       if (error instanceof DataError) {
-        throw new HttpException(
+        throw new BadRequestError(
           'invalid id - this brand or addon does not exist',
-          HttpStatus.BAD_REQUEST,
-          { cause: error },
+          error,
         );
       } else {
-        throw new HttpException(
-          'Internal Server Error',
-          HttpStatus.INTERNAL_SERVER_ERROR,
-          { cause: error },
-        );
+        throw new InternalServerError(error);
       }
     }
   }

@@ -1,4 +1,4 @@
-import { HttpException, HttpStatus, Inject, Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import {
   DataError,
   ForeignKeyViolationError,
@@ -8,6 +8,11 @@ import {
 import { v4 as uuidv4 } from 'uuid';
 import { CategoriesModel } from '../../database/models/categories.model';
 import { CreateCategoryDto } from '../../dto/categories/create-category.dto';
+import {
+  BadRequestError,
+  ConfilctError,
+  InternalServerError,
+} from 'src/utils/serviceErrorBuilder.utils';
 
 @Injectable()
 export class CategoriesService {
@@ -26,26 +31,36 @@ export class CategoriesService {
       return category;
     } catch (error) {
       if (error instanceof UniqueViolationError) {
-        throw new HttpException(
+        throw new ConfilctError(
           'duplicate entry - this category already exists for the given brand',
-          HttpStatus.CONFLICT,
-          { cause: error },
+          error,
         );
       } else if (
         error instanceof ForeignKeyViolationError ||
         error instanceof DataError
       ) {
-        throw new HttpException(
+        throw new BadRequestError(
           'invalid id - this brand does not exist',
-          HttpStatus.BAD_REQUEST,
-          { cause: error },
+          error,
         );
       } else {
-        throw new HttpException(
-          'Internal Server Error',
-          HttpStatus.INTERNAL_SERVER_ERROR,
-          { cause: error },
+        throw new InternalServerError(error);
+      }
+    }
+  }
+
+  async findAll(brandId: string): Promise<CategoriesModel[]> {
+    try {
+      const categories = await this.modelClass.query().where({ brandId });
+      return categories;
+    } catch (error) {
+      if (error instanceof DataError) {
+        throw new BadRequestError(
+          'invalid id - this brand does not exist',
+          error,
         );
+      } else {
+        throw new InternalServerError(error);
       }
     }
   }
@@ -59,11 +74,7 @@ export class CategoriesService {
         .first();
       return id;
     } catch (error) {
-      throw new HttpException(
-        'Internal Server Error',
-        HttpStatus.INTERNAL_SERVER_ERROR,
-        { cause: error },
-      );
+      throw new InternalServerError(error);
     }
   }
 }

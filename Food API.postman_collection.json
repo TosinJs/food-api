@@ -17,7 +17,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEiLCJ1c2VybmFtZSI6InBhc3N3b3JkIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNjczMTYwODI3LCJleHAiOjE2NzMyNDcyMjcsImlzcyI6IlJpbEhvbWllIn0.t6pxhJ_XZm4jcbGxHh3sB3zq7rX-zyZ8Xe4fL5enmcM",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEiLCJ1c2VybmFtZSI6InBhc3N3b3JkIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNjczMjE1NjA4LCJleHAiOjE2NzMzMDIwMDgsImlzcyI6IlJpbEhvbWllIn0.bV2gZIexN8b6sw2enisETxNnffFWeaR-OLh7sMdqFs4",
 									"type": "string"
 								}
 							]
@@ -26,13 +26,40 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\": \"Fish Grills\",\r\n    \"description\": \"Quality Food, Quality People\"\r\n}",
+							"raw": "{\r\n    \"name\": \"Chicken Republic\",\r\n    \"description\": \"All Chicken\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
 								}
 							}
 						},
+						"url": {
+							"raw": "{{Host}}/brands",
+							"host": [
+								"{{Host}}"
+							],
+							"path": [
+								"brands"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Brands",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEiLCJ1c2VybmFtZSI6InBhc3N3b3JkIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNjczMjE1NjA4LCJleHAiOjE2NzMzMDIwMDgsImlzcyI6IlJpbEhvbWllIn0.bV2gZIexN8b6sw2enisETxNnffFWeaR-OLh7sMdqFs4",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
 						"url": {
 							"raw": "{{Host}}/brands",
 							"host": [
@@ -53,7 +80,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEiLCJ1c2VybmFtZSI6InBhc3N3b3JkIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNjczMTYwODI3LCJleHAiOjE2NzMyNDcyMjcsImlzcyI6IlJpbEhvbWllIn0.t6pxhJ_XZm4jcbGxHh3sB3zq7rX-zyZ8Xe4fL5enmcM",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEiLCJ1c2VybmFtZSI6InBhc3N3b3JkIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNjczMjE1NjA4LCJleHAiOjE2NzMzMDIwMDgsImlzcyI6IlJpbEhvbWllIn0.bV2gZIexN8b6sw2enisETxNnffFWeaR-OLh7sMdqFs4",
 									"type": "string"
 								}
 							]
@@ -62,7 +89,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\":\"ice cream\",\r\n    \"price\":50,\r\n    \"category\": \"beverage\",\r\n    \"description\": \"sweet and cool\"\r\n}",
+							"raw": "{\r\n    \"name\":\"jollof rice\",\r\n    \"price\":50\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -82,7 +109,7 @@
 							"variable": [
 								{
 									"key": "brandId",
-									"value": "3171e596-be88-4320-886f-5bbf1ff2db17"
+									"value": "e99975fb-6fdd-4b1c-8616-963133c52da2"
 								}
 							]
 						}
@@ -97,7 +124,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEiLCJ1c2VybmFtZSI6InBhc3N3b3JkIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNjczMTYwODI3LCJleHAiOjE2NzMyNDcyMjcsImlzcyI6IlJpbEhvbWllIn0.t6pxhJ_XZm4jcbGxHh3sB3zq7rX-zyZ8Xe4fL5enmcM",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEiLCJ1c2VybmFtZSI6InBhc3N3b3JkIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNjczMjE1NjA4LCJleHAiOjE2NzMzMDIwMDgsImlzcyI6IlJpbEhvbWllIn0.bV2gZIexN8b6sw2enisETxNnffFWeaR-OLh7sMdqFs4",
 									"type": "string"
 								}
 							]
@@ -117,7 +144,7 @@
 							"variable": [
 								{
 									"key": "brandId",
-									"value": "3171e596-be88-4320-886f-5bbf1ff2db17"
+									"value": "e99975fb-6fdd-4b1c-8616-963133c52da2"
 								}
 							]
 						}
@@ -132,7 +159,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEiLCJ1c2VybmFtZSI6InBhc3N3b3JkIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNjczMTYwODI3LCJleHAiOjE2NzMyNDcyMjcsImlzcyI6IlJpbEhvbWllIn0.t6pxhJ_XZm4jcbGxHh3sB3zq7rX-zyZ8Xe4fL5enmcM",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEiLCJ1c2VybmFtZSI6InBhc3N3b3JkIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNjczMjE1NjA4LCJleHAiOjE2NzMzMDIwMDgsImlzcyI6IlJpbEhvbWllIn0.bV2gZIexN8b6sw2enisETxNnffFWeaR-OLh7sMdqFs4",
 									"type": "string"
 								}
 							]
@@ -153,11 +180,11 @@
 							"variable": [
 								{
 									"key": "brandId",
-									"value": "3171e596-be88-4320-886f-5bbf1ff2db17"
+									"value": "e99975fb-6fdd-4b1c-8616-963133c52da2"
 								},
 								{
 									"key": "addonId",
-									"value": "89ec9720-0a94-4c6d-b670-a81d6a1a4b4b"
+									"value": "4f817cb9-3285-40cd-ab12-8b064b2b64dd"
 								}
 							]
 						}
@@ -172,7 +199,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEiLCJ1c2VybmFtZSI6InBhc3N3b3JkIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNjczMTYwODI3LCJleHAiOjE2NzMyNDcyMjcsImlzcyI6IlJpbEhvbWllIn0.t6pxhJ_XZm4jcbGxHh3sB3zq7rX-zyZ8Xe4fL5enmcM",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEiLCJ1c2VybmFtZSI6InBhc3N3b3JkIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNjczMjE1NjA4LCJleHAiOjE2NzMzMDIwMDgsImlzcyI6IlJpbEhvbWllIn0.bV2gZIexN8b6sw2enisETxNnffFWeaR-OLh7sMdqFs4",
 									"type": "string"
 								}
 							]
@@ -181,7 +208,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"description\": \"cool vegies\"\r\n}",
+							"raw": "{\r\n    \"description\": \"tasty and nice\",\r\n    \"category\": \"cereal\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -202,11 +229,11 @@
 							"variable": [
 								{
 									"key": "brandId",
-									"value": "3171e596-be88-4320-886f-5bbf1ff2db17"
+									"value": "e99975fb-6fdd-4b1c-8616-963133c52da2"
 								},
 								{
 									"key": "addonId",
-									"value": "89ec9720-0a94-4c6d-b670-a81d6a1a4b4b"
+									"value": "4f817cb9-3285-40cd-ab12-8b064b2b64dd"
 								}
 							]
 						}
@@ -221,7 +248,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEiLCJ1c2VybmFtZSI6InBhc3N3b3JkIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNjczMTYwODI3LCJleHAiOjE2NzMyNDcyMjcsImlzcyI6IlJpbEhvbWllIn0.t6pxhJ_XZm4jcbGxHh3sB3zq7rX-zyZ8Xe4fL5enmcM",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEiLCJ1c2VybmFtZSI6InBhc3N3b3JkIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNjczMjE1NjA4LCJleHAiOjE2NzMzMDIwMDgsImlzcyI6IlJpbEhvbWllIn0.bV2gZIexN8b6sw2enisETxNnffFWeaR-OLh7sMdqFs4",
 									"type": "string"
 								}
 							]
@@ -242,11 +269,11 @@
 							"variable": [
 								{
 									"key": "brandId",
-									"value": "3171e596-be88-4320-886f-5bbf1ff2db17"
+									"value": "e99975fb-6fdd-4b1c-8616-963133c52da2"
 								},
 								{
 									"key": "addonId",
-									"value": "89ec9720-0a94-4c6d-b670-a81d6a1a4b4b"
+									"value": "4f817cb9-3285-40cd-ab12-8b064b2b64dd"
 								}
 							]
 						}
@@ -261,7 +288,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEiLCJ1c2VybmFtZSI6InBhc3N3b3JkIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNjczMTYwODI3LCJleHAiOjE2NzMyNDcyMjcsImlzcyI6IlJpbEhvbWllIn0.t6pxhJ_XZm4jcbGxHh3sB3zq7rX-zyZ8Xe4fL5enmcM",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEiLCJ1c2VybmFtZSI6InBhc3N3b3JkIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNjczMjE1NjA4LCJleHAiOjE2NzMzMDIwMDgsImlzcyI6IlJpbEhvbWllIn0.bV2gZIexN8b6sw2enisETxNnffFWeaR-OLh7sMdqFs4",
 									"type": "string"
 								}
 							]
@@ -270,7 +297,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\": \"spices\"\r\n}",
+							"raw": "{\r\n    \"name\": \"fruits\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -290,7 +317,42 @@
 							"variable": [
 								{
 									"key": "brandId",
-									"value": "3171e596-be88-4320-886f-5bbf1ff2db17"
+									"value": "e99975fb-6fdd-4b1c-8616-963133c52da2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Categories",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEiLCJ1c2VybmFtZSI6InBhc3N3b3JkIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNjczMjE1NjA4LCJleHAiOjE2NzMzMDIwMDgsImlzcyI6IlJpbEhvbWllIn0.bV2gZIexN8b6sw2enisETxNnffFWeaR-OLh7sMdqFs4",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{Host}}/brands/:brandId/addon-categories",
+							"host": [
+								"{{Host}}"
+							],
+							"path": [
+								"brands",
+								":brandId",
+								"addon-categories"
+							],
+							"variable": [
+								{
+									"key": "brandId",
+									"value": "6cf6ddf9-48a4-4e71-8b7e-3fe9bd300a38"
 								}
 							]
 						}
@@ -309,7 +371,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"username\": \"flicks\",\r\n    \"password\": \"password\"\r\n}",
+							"raw": "{\r\n    \"username\": \"spawn\",\r\n    \"password\": \"password\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"

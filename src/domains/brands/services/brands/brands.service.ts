@@ -1,8 +1,13 @@
-import { HttpException, HttpStatus, Inject, Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { v4 as uuidv4 } from 'uuid';
 import { CreateBrandDto } from '../../dto/brands/create-brand.dto';
-import { ModelClass, UniqueViolationError } from 'objection';
+import { DataError, ModelClass, UniqueViolationError } from 'objection';
 import { BrandsModel } from '../../database/models/brands.model';
+import {
+  BadRequestError,
+  ConfilctError,
+  InternalServerError,
+} from 'src/utils/serviceErrorBuilder.utils';
 
 @Injectable()
 export class BrandsService {
@@ -24,17 +29,28 @@ export class BrandsService {
       return brand;
     } catch (error) {
       if (error instanceof UniqueViolationError) {
-        throw new HttpException(
+        throw new ConfilctError(
           'duplicate entry - this brand name already exists',
-          HttpStatus.CONFLICT,
-          { cause: error },
+          error,
         );
       } else {
-        throw new HttpException(
-          'Internal Server Error',
-          HttpStatus.INTERNAL_SERVER_ERROR,
-          { cause: error },
+        throw new InternalServerError(error);
+      }
+    }
+  }
+
+  async findAll(): Promise<BrandsModel[]> {
+    try {
+      const brands = await this.modelClass.query();
+      return brands;
+    } catch (error) {
+      if (error instanceof DataError) {
+        throw new BadRequestError(
+          'invalid id - this brand or addon does not exist',
+          error,
         );
+      } else {
+        throw new InternalServerError(error);
       }
     }
   }
