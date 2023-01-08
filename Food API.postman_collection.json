@@ -1,0 +1,388 @@
+{
+	"info": {
+		"_postman_id": "c6276b9b-137e-48f1-8d0d-9da5661fc327",
+		"name": "Food API",
+		"description": "This Collection contains the API Documentation For the Food API Project",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Brand",
+			"item": [
+				{
+					"name": "Create Brand",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEiLCJ1c2VybmFtZSI6InBhc3N3b3JkIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNjczMTYwODI3LCJleHAiOjE2NzMyNDcyMjcsImlzcyI6IlJpbEhvbWllIn0.t6pxhJ_XZm4jcbGxHh3sB3zq7rX-zyZ8Xe4fL5enmcM",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Fish Grills\",\r\n    \"description\": \"Quality Food, Quality People\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{Host}}/brands",
+							"host": [
+								"{{Host}}"
+							],
+							"path": [
+								"brands"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Addon",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEiLCJ1c2VybmFtZSI6InBhc3N3b3JkIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNjczMTYwODI3LCJleHAiOjE2NzMyNDcyMjcsImlzcyI6IlJpbEhvbWllIn0.t6pxhJ_XZm4jcbGxHh3sB3zq7rX-zyZ8Xe4fL5enmcM",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"ice cream\",\r\n    \"price\":50,\r\n    \"category\": \"beverage\",\r\n    \"description\": \"sweet and cool\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{Host}}/brands/:brandId/addons",
+							"host": [
+								"{{Host}}"
+							],
+							"path": [
+								"brands",
+								":brandId",
+								"addons"
+							],
+							"variable": [
+								{
+									"key": "brandId",
+									"value": "3171e596-be88-4320-886f-5bbf1ff2db17"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Addons",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEiLCJ1c2VybmFtZSI6InBhc3N3b3JkIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNjczMTYwODI3LCJleHAiOjE2NzMyNDcyMjcsImlzcyI6IlJpbEhvbWllIn0.t6pxhJ_XZm4jcbGxHh3sB3zq7rX-zyZ8Xe4fL5enmcM",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{Host}}/brands/:brandId/addons",
+							"host": [
+								"{{Host}}"
+							],
+							"path": [
+								"brands",
+								":brandId",
+								"addons"
+							],
+							"variable": [
+								{
+									"key": "brandId",
+									"value": "3171e596-be88-4320-886f-5bbf1ff2db17"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Addon",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEiLCJ1c2VybmFtZSI6InBhc3N3b3JkIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNjczMTYwODI3LCJleHAiOjE2NzMyNDcyMjcsImlzcyI6IlJpbEhvbWllIn0.t6pxhJ_XZm4jcbGxHh3sB3zq7rX-zyZ8Xe4fL5enmcM",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{Host}}/brands/:brandId/addons/:addonId",
+							"host": [
+								"{{Host}}"
+							],
+							"path": [
+								"brands",
+								":brandId",
+								"addons",
+								":addonId"
+							],
+							"variable": [
+								{
+									"key": "brandId",
+									"value": "3171e596-be88-4320-886f-5bbf1ff2db17"
+								},
+								{
+									"key": "addonId",
+									"value": "89ec9720-0a94-4c6d-b670-a81d6a1a4b4b"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Addon",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEiLCJ1c2VybmFtZSI6InBhc3N3b3JkIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNjczMTYwODI3LCJleHAiOjE2NzMyNDcyMjcsImlzcyI6IlJpbEhvbWllIn0.t6pxhJ_XZm4jcbGxHh3sB3zq7rX-zyZ8Xe4fL5enmcM",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"description\": \"cool vegies\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{Host}}/brands/:brandId/addons/:addonId",
+							"host": [
+								"{{Host}}"
+							],
+							"path": [
+								"brands",
+								":brandId",
+								"addons",
+								":addonId"
+							],
+							"variable": [
+								{
+									"key": "brandId",
+									"value": "3171e596-be88-4320-886f-5bbf1ff2db17"
+								},
+								{
+									"key": "addonId",
+									"value": "89ec9720-0a94-4c6d-b670-a81d6a1a4b4b"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Addon",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEiLCJ1c2VybmFtZSI6InBhc3N3b3JkIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNjczMTYwODI3LCJleHAiOjE2NzMyNDcyMjcsImlzcyI6IlJpbEhvbWllIn0.t6pxhJ_XZm4jcbGxHh3sB3zq7rX-zyZ8Xe4fL5enmcM",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{Host}}/brands/:brandId/addons/:addonId",
+							"host": [
+								"{{Host}}"
+							],
+							"path": [
+								"brands",
+								":brandId",
+								"addons",
+								":addonId"
+							],
+							"variable": [
+								{
+									"key": "brandId",
+									"value": "3171e596-be88-4320-886f-5bbf1ff2db17"
+								},
+								{
+									"key": "addonId",
+									"value": "89ec9720-0a94-4c6d-b670-a81d6a1a4b4b"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Categories",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEiLCJ1c2VybmFtZSI6InBhc3N3b3JkIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNjczMTYwODI3LCJleHAiOjE2NzMyNDcyMjcsImlzcyI6IlJpbEhvbWllIn0.t6pxhJ_XZm4jcbGxHh3sB3zq7rX-zyZ8Xe4fL5enmcM",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"spices\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{Host}}/brands/:brandId/addon-categories",
+							"host": [
+								"{{Host}}"
+							],
+							"path": [
+								"brands",
+								":brandId",
+								"addon-categories"
+							],
+							"variable": [
+								{
+									"key": "brandId",
+									"value": "3171e596-be88-4320-886f-5bbf1ff2db17"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "Signup",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"flicks\",\r\n    \"password\": \"password\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{Host}}/users/signup",
+							"host": [
+								"{{Host}}"
+							],
+							"path": [
+								"users",
+								"signup"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"password\",\r\n    \"password\": \"password\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{Host}}/users/login",
+							"host": [
+								"{{Host}}"
+							],
+							"path": [
+								"users",
+								"login"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "Host",
+			"value": "https://f-c3nm.onrender.com"
+		}
+	]
+}
