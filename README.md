@@ -56,4 +56,10 @@ $ npm run start:prod
 
 ## Database Architecture
 
-The database architecture can be found @ [here](https://lucid.app/lucidchart/0f7b9837-04d1-4c08-a647-aa9e68718f17/edit?viewport_loc=-125%2C-73%2C2468%2C1154%2C0_0&invitationId=inv_2865823c-5632-4e8c-81df-5090b3207a12).
+The database architecture can be found @ [here](https://lucid.app/lucidchart/0f7b9837-04d1-4c08-a647-aa9e68718f17/edit?viewport_loc=-465%2C371%2C2946%2C1154%2C0_0&invitationId=inv_2865823c-5632-4e8c-81df-5090b3207a12).
+
+![Brands ERD](https://user-images.githubusercontent.com/68669102/211183602-4587a355-3647-48cf-ad7c-3d0d27d60d09.PNG)
+
+![User ERD](https://user-images.githubusercontent.com/68669102/211183603-5b009e98-47f7-4675-8b70-dc12f967692c.PNG)
+
+
