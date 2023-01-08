@@ -17,11 +17,17 @@ The documentation of this application can be found @:
 ## Run the Application Locally
 
 ```bash
+# Clone the repository
+$ git clone https://github.com/TosinJs/food-api.git
+
+# Install dependencies
+$ npm install
+
 # configuration 
 # Create .env file in the root folder
 $ touch .env
 
-# populate the .env file with <strong>your</strong> files
+# populate the .env file with your files
 $ DB_CONNECTION_STRING = "your postgresql connection string"
 $ DB_CLIENT = "pg"
 $ JWT_SECRET = "your JWT secret"
