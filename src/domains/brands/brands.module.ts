@@ -10,23 +10,20 @@ import { NestModule } from '@nestjs/common/interfaces/modules';
 import { VerifyIDToken } from './middleware/auth.middleware';
 import { CategoriesController } from './controllers/categories/categories.controller';
 
-
 @Module({
   controllers: [BrandsController, AddonsController, CategoriesController],
   providers: [
-    BrandsService, 
-    AddonsService, 
+    BrandsService,
+    AddonsService,
     CategoriesService,
     {
       provide: APP_GUARD,
       useClass: RolesGuard,
-    }
-  ]
+    },
+  ],
 })
 export class BrandsModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
-    consumer
-      .apply(VerifyIDToken)
-      .forRoutes('brands')
+    consumer.apply(VerifyIDToken).forRoutes('brands');
   }
 }

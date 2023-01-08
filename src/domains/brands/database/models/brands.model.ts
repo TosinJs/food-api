@@ -1,10 +1,10 @@
-import { BaseModel } from "./base.model";
+import { BaseModel } from './base.model';
 
 export class BrandsModel extends BaseModel {
-    static get tableName() {
-        return 'Brands'
-    }
+  static get tableName() {
+    return 'Brands';
+  }
 
-    name: string;
-    description: string;
+  name: string;
+  description: string;
 }

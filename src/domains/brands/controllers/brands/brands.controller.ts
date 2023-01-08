@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, HttpStatus } from '@nestjs/common';
+import { Controller, Post, Body, HttpStatus } from '@nestjs/common';
 import { BrandsService } from '../../services/brands/brands.service';
 import { CreateBrandDto } from '../../dto/brands/create-brand.dto';
 import { createSuccessResponse } from 'src/utils/responseBuilder.utils';
@@ -18,7 +18,7 @@ export class BrandsController {
     return createSuccessResponse(
       HttpStatus.CREATED,
       'Success',
-      await this.brandsService.create(createBrandDto)
-    )
+      await this.brandsService.create(createBrandDto),
+    );
   }
 }

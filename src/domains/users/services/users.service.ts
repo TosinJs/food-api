@@ -14,59 +14,77 @@ export class UsersService {
     @Inject('UsersModel') private modelClass: ModelClass<UsersModel>,
     private encryptService: EncryptService,
     private jwtService: JwtTokenService,
-    ) {}
+  ) {}
 
   async create(createUserDto: CreateUserDto) {
-    const password = await this.encryptService.encrypt(createUserDto.password)
+    const password = await this.encryptService.encrypt(createUserDto.password);
 
     const newUser: Partial<UsersModel> = {
       id: uuidv4(),
       username: createUserDto.username,
-      password
-    }
+      password,
+    };
 
     try {
-      await this.modelClass.query().insert(newUser).returning('*')
-    } catch(error) {
+      await this.modelClass.query().insert(newUser).returning('*');
+    } catch (error) {
       if (error instanceof UniqueViolationError) {
         throw new HttpException(
-            'duplicate entry - this username already exists',
-            HttpStatus.CONFLICT, 
-            { cause: error }
-        )
-    } else {
+          'duplicate entry - this username already exists',
+          HttpStatus.CONFLICT,
+          { cause: error },
+        );
+      } else {
         throw new HttpException(
-            'Internal Server Error',
-            HttpStatus.INTERNAL_SERVER_ERROR,
-            { cause: error }
-        )
+          'Internal Server Error',
+          HttpStatus.INTERNAL_SERVER_ERROR,
+          { cause: error },
+        );
       }
     }
 
-    const token = this.jwtService.generateIdToken({
-        id: "1", username: createUserDto.username, role: Role.User
-      }, '24h'
-    )
-    return token
+    const token = this.jwtService.generateIdToken(
+      {
+        id: '1',
+        username: createUserDto.username,
+        role: Role.User,
+      },
+      '24h',
+    );
+    return token;
   }
 
   async login(loginUserDto: LoginUserDto) {
-    const { username, password } = loginUserDto
+    const { username, password } = loginUserDto;
 
-    const result = await this.modelClass.query().select('password', 'role').where({ username }).first()
-    
+    const result = await this.modelClass
+      .query()
+      .select('password', 'role')
+      .where({ username })
+      .first();
+
     if (!result) {
-      throw new HttpException('Invalid Username or Password', HttpStatus.BAD_REQUEST)
+      throw new HttpException(
+        'Invalid Username or Password',
+        HttpStatus.BAD_REQUEST,
+      );
     }
 
-    if (!await this.encryptService.compare(result.password, password)) {
-      throw new HttpException('Invalid Username or Password', HttpStatus.BAD_REQUEST)
+    if (!(await this.encryptService.compare(result.password, password))) {
+      throw new HttpException(
+        'Invalid Username or Password',
+        HttpStatus.BAD_REQUEST,
+      );
     }
-    
-    const token = this.jwtService.generateIdToken({
-        id: "1", username: loginUserDto.username, role: result.role
-      }, '24h'
-    )
+
+    const token = this.jwtService.generateIdToken(
+      {
+        id: '1',
+        username: loginUserDto.username,
+        role: result.role,
+      },
+      '24h',
+    );
     return token;
   }
 }

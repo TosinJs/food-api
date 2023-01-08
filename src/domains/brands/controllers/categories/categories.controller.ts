@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, HttpStatus } from '@nestjs/common';
+import { Controller, Post, Body, Param, HttpStatus } from '@nestjs/common';
 import { createSuccessResponse } from 'src/utils/responseBuilder.utils';
 import { CategoriesService } from '../../services/categories/categories.service';
 import { CreateCategoryDto } from '../../dto/categories/create-category.dto';
@@ -14,11 +14,14 @@ export class CategoriesController {
 
   @Post()
   @Roles(Role.Admin)
-  async create(@Param('brandId') brandId: string, @Body() createCategoryDto: CreateCategoryDto) {
+  async create(
+    @Param('brandId') brandId: string,
+    @Body() createCategoryDto: CreateCategoryDto,
+  ) {
     return createSuccessResponse(
-        HttpStatus.CREATED,
-        'Success',
-        await this.categoriesService.create(brandId, createCategoryDto)
-    )
+      HttpStatus.CREATED,
+      'Success',
+      await this.categoriesService.create(brandId, createCategoryDto),
+    );
   }
 }
