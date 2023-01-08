@@ -5,7 +5,10 @@ import { Roles } from '../../decorators/roles.decorator';
 import { CreateAddonDto } from '../../dto/addons/create-addon.dto';
 import { UpdateAddonDto } from '../../dto/addons/update-addon.dto';
 import { AddonsService } from '../../services/addons/addons.service';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger/dist';
 
+@ApiTags('Addons')
+@ApiBearerAuth()
 @Controller('brands/:brandId/addons')
 export class AddonsController {
     constructor(private readonly addonService: AddonsService) {}
@@ -26,17 +29,24 @@ export class AddonsController {
     @Get()
     @Roles(Role.Admin)
     async findAll(@Param('brandId') brandId: string) {
-        return createSuccessResponse(
-            HttpStatus.OK,
-            'Success',
-            await this.addonService.findAll(brandId)
-        )
+        const addons = await this.addonService.findAll(brandId)
+        if (addons.length < 1) {
+            throw new HttpException(
+                'addons not found for this brand',
+                HttpStatus.NOT_FOUND,
+                { cause: new Error('Addons Not Found') }
+            )
+        }
+        return createSuccessResponse(HttpStatus.OK, 'Success', addons)
     }
 
     @Get(':addonId')
     @Roles(Role.Admin)
-    async findOne(@Param('addonId') addonId: string) {
-        const addon = await this.addonService.findOne(addonId)
+    async findOne(
+        @Param('brandId') brandId: string,
+        @Param('addonId') addonId: string
+        ) {
+        const addon = await this.addonService.findOne(brandId, addonId)
         if (!addon) {
             throw new HttpException(
                 'addon not found',
@@ -55,9 +65,9 @@ export class AddonsController {
         @Body() updateAddonDto: UpdateAddonDto
     ) {
         const res = await this.addonService.update(brandId, addonId, updateAddonDto)
-        if (res == 0) {
+        if (!res) {
             throw new HttpException(
-                'invalid brandId or user id - update failed',
+                'invalid brand id or addon id - update failed',
                 HttpStatus.BAD_REQUEST,
                 { cause: new Error('Failed to Update Addon') }
             )
@@ -67,11 +77,14 @@ export class AddonsController {
 
     @Delete(':addonId')
     @Roles(Role.Admin)
-    async delete(@Param('addonId') addonId: string) {
-        const res = await this.addonService.delete(addonId)
+    async delete(
+        @Param('brandId') brandId: string,
+        @Param('addonId') addonId: string
+        ) {
+        const res = await this.addonService.delete(brandId, addonId)
         if (res == 0) {
             throw new HttpException(
-                'invalid brandId or user id - update failed',
+                'invalid brand id or addon id - delete failed',
                 HttpStatus.BAD_REQUEST,
                 { cause: new Error('Failed to Update Addon') }
             )

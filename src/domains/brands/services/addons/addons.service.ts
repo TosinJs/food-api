@@ -23,7 +23,7 @@ export class AddonsService {
             brandId,
         }
 
-        if (createAddonDto.category != '') {
+        if (createAddonDto.category) {
             let res = await this.categoriesService.findByNameAndBrand(createAddonDto.category, brandId)
             if (res) {
                 categoryId = res.id
@@ -32,7 +32,8 @@ export class AddonsService {
                 categoryId = res.id
             }
         }
-        newAddon.categoryId = categoryId
+
+        createAddonDto.category ? newAddon.categoryId = categoryId : null
 
         try {
             const createdAddon = await this.modelClass
@@ -69,18 +70,25 @@ export class AddonsService {
             const addons = await this.modelClass.query().where({ brandId })
             return addons
         } catch (error) {
-            console.log(error)
-            throw new HttpException(
-                'Internal Server Error',
-                HttpStatus.INTERNAL_SERVER_ERROR,
-                { cause: error }
-            )
+            if (error instanceof DataError) {
+                throw new HttpException(
+                    'invalid id - this brand or addon does not exist',
+                    HttpStatus.BAD_REQUEST, 
+                    { cause: error }
+                )
+            } else {
+                throw new HttpException(
+                    'Internal Server Error',
+                    HttpStatus.INTERNAL_SERVER_ERROR,
+                    { cause: error }
+                )
+            }
         }
     }
 
-    async findOne(addonId: string): Promise<AddonsModel>{
+    async findOne(brandId: string, addonId: string): Promise<AddonsModel>{
         try {
-            const res = await this.modelClass.query().findById(addonId)
+            const res = await this.modelClass.query().findOne({ id: addonId, brandId })
             return res
         } catch (error) {
             if (error instanceof DataError) {
@@ -99,7 +107,7 @@ export class AddonsService {
         }
     }
 
-    async update(brandId: string, addonId: string, updateAddonDto: UpdateAddonDto): Promise<number> {
+    async update(brandId: string, addonId: string, updateAddonDto: UpdateAddonDto): Promise<AddonsModel[]> {
         let categoryId = ''
         const updatedAddon: Partial<AddonsModel> = {
             ...(updateAddonDto.name && { name: updateAddonDto.name }),
@@ -108,7 +116,7 @@ export class AddonsService {
         }
 
 
-        if (updateAddonDto.category != '') {
+        if (updateAddonDto.category) {
             let res = await this.categoriesService.findByNameAndBrand(updateAddonDto.category, brandId)
             if (res) {
                 categoryId = res.id
@@ -117,14 +125,15 @@ export class AddonsService {
                 categoryId = res.id
             }
         }
-        updatedAddon.categoryId = categoryId
+        updateAddonDto.category ? updatedAddon.categoryId = categoryId : null
 
         try {
             const res = await this.modelClass
                 .query()
-                .findById(addonId)
+                .findOne({ id: addonId, brandId })
                 .patch(updatedAddon)
-
+                .returning(['*'])
+                
             return res
         } catch (error) {
             if (error instanceof DataError) {
@@ -143,12 +152,12 @@ export class AddonsService {
         }
     }
 
-    async delete(addonId: string): Promise<number> {
+    async delete(brandId: string, addonId: string): Promise<number> {
         try {
             const res = await this.modelClass
             .query()
             .delete()
-            .where({ id: addonId })
+            .where({ id: addonId, brandId })
             return res
         } catch (error) {
             if (error instanceof DataError) {

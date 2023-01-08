@@ -2,6 +2,8 @@ import { HttpException, HttpStatus } from '@nestjs/common'
 import { NextFunction, Request } from 'express'
 import * as jwt from 'jsonwebtoken'
 import { Role } from 'src/types/enum'
+// import * as dotenv from 'dotenv'
+// dotenv.config()
 
 interface RequestWithUser extends Request {
     user: any,
@@ -9,8 +11,8 @@ interface RequestWithUser extends Request {
 }
 
 function verifyToken(token: string): Promise<tokenPayload> {
-    return new Promise((resolve, reject) => {
-        jwt.verify(token, '', async (err, payload: any) => {
+    return new Promise(async (resolve, reject) => {
+        jwt.verify(token, process.env.JWT_SECRET, async (err, payload: any) => {
             if (err) {
                 reject(err)
                 return

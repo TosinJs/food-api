@@ -3,7 +3,9 @@ import { UsersService } from '../services/users.service';
 import { CreateUserDto } from '../dto/create-user.dto';
 import { LoginUserDto } from '../dto/login-user.dto';
 import { createSuccessResponse } from 'src/utils/responseBuilder.utils';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Users')
 @Controller('users')
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
@@ -21,7 +23,7 @@ export class UsersController {
   async login(@Body() loginUserDto: LoginUserDto) {
     return createSuccessResponse(
       HttpStatus.CONTINUE, 
-      'User Created', 
+      'User LoggedIn', 
       await this.usersService.login(loginUserDto)
       )
   }

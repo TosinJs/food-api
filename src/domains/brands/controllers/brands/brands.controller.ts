@@ -4,7 +4,10 @@ import { CreateBrandDto } from '../../dto/brands/create-brand.dto';
 import { createSuccessResponse } from 'src/utils/responseBuilder.utils';
 import { Role } from 'src/types/enum';
 import { Roles } from '../../decorators/roles.decorator';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Brands')
+@ApiBearerAuth()
 @Controller('brands')
 export class BrandsController {
   constructor(private readonly brandsService: BrandsService) {}

@@ -11,9 +11,11 @@ export class CreateAddonDto {
 
     @IsString()
     @IsOptional()
+    @IsNotEmpty()
     category: string;
 
     @IsString()
     @IsOptional()
+    @IsNotEmpty()
     description: string;
 }

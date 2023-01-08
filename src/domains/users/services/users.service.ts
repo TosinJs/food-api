@@ -62,7 +62,7 @@ export class UsersService {
     if (!await this.encryptService.compare(result.password, password)) {
       throw new HttpException('Invalid Username or Password', HttpStatus.BAD_REQUEST)
     }
-    console.log(result.role)
+    
     const token = this.jwtService.generateIdToken({
         id: "1", username: loginUserDto.username, role: result.role
       }, '24h'

@@ -1,15 +1,16 @@
-import { Injectable } from "@nestjs/common";
-import * as jwt from "jsonwebtoken";
+import { Injectable } from '@nestjs/common';
+import * as jwt from 'jsonwebtoken';
+import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class JwtTokenService {
-    constructor(){}
+    constructor(private configService: ConfigService) {}
 
     generateIdToken(payload: tokenPayload, expiryTime: string): Promise<string> {
         return new Promise((resolve, reject) => {
-            jwt.sign(payload, '', {
+            jwt.sign(payload, this.configService.get('JWT_SECRET'), {
                 expiresIn: expiryTime,
-                issuer: "RilHomie"
+                issuer: 'RilHomie'
             }, (err, token) => {
                 if (err) reject(err)
                 resolve(token)

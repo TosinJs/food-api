@@ -5,6 +5,9 @@ import { AddonsModel } from 'src/domains/brands/database/models/addons.model';
 import { BrandsModel } from 'src/domains/brands/database/models/brands.model';
 import { CategoriesModel } from 'src/domains/brands/database/models/categories.model';
 import { UsersModel } from 'src/domains/users/database/models/users.models';
+import { ConfigModule } from '@nestjs/config/dist/config.module';
+// import * as dotenv from 'dotenv'
+// dotenv.config()
 
 const models = [AddonsModel, BrandsModel, CategoriesModel, UsersModel]
 
@@ -20,10 +23,10 @@ const providers = [
     {
         provide: 'KNEXCONNECTION',
         useFactory: async () => {
+            ConfigModule.forRoot()
             const knex = Knex({
-                client: '',
-                connection: {
-                },
+                client: process.env.DB_CLIENT,
+                connection: process.env.DB_CONNECTION_STRING,
                 ...knexSnakeCaseMappers(),
             })
             Model.knex(knex) 
