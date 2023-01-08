@@ -1,42 +1,31 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
-</p>
-
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
-
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+## Food Api
 
 ## Description
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+This repository contains the API logic for a FoodTech Application
 
-## Installation
+## Deployment
+A live deployment of this application can be found @ https://f-c3nm.onrender.com
+
+## Documentation
+The documentation of this application can be found @ https://f-c3nm.onrender.com/api/docs
+
+![Docs](https://user-images.githubusercontent.com/68669102/211183020-bb8f4d80-c769-4ae1-9274-cb9154ff5c27.PNG)
+
+## Run the Application Locally
 
 ```bash
-$ npm install
-```
+# configuration 
+# Create .env file in the root folder
+$ touch .env
 
-## Running the app
+# populate the .env file with <strong>your</strong> files
+$ DB_CONNECTION_STRING = "your postgresql connection string"
+$ DB_CLIENT = "pg"
+$ JWT_SECRET = "your JWT secret"
 
-```bash
-# development
-$ npm run start
+# Database Migrations (The migration files are found in the database folder)
+$ npm run migrate
 
 # watch mode
 $ npm run start:dev
@@ -45,29 +34,26 @@ $ npm run start:dev
 $ npm run start:prod
 ```
 
-## Test
+## Application Flow
+<p>The business logic of this application is in the src/domains folder. The business logic is split into two services: </p>
+<li>Users</li>
+<li>Brands</li>
 
-```bash
-# unit tests
-$ npm run test
+### Users
+<p>The Users service contains all the logic for registeration and authentication of users </p>
+<p>A JWT is retured to the user when they signup or login. The JWT is used to access the <strong>Brands</strong> service</p>
+<p><strong>Admin Credentials: { username: "password", password: "password" }</strong>
+<p>Make a POST request with admin credentials @ https://f-c3nm.onrender.com/users/login to get the bearer token</p>
 
-# e2e tests
-$ npm run test:e2e
+![login flow](https://user-images.githubusercontent.com/68669102/211182773-d4f712ac-9c4f-4520-97c1-48a918b3a7eb.PNG)
 
-# test coverage
-$ npm run test:cov
-```
+### Brands
+<p>The Brands service contains all the logic for creating Brands, Addons, and Categories </p>
+<p>All the endpoints in the brands service are "Admin" protected endpoints </p>
+<p>The JWT is used to access the <strong>Brands</strong> service. Send this JWT with every request to a brand endpoint</p>
 
-## Support
+![Regular Flow](https://user-images.githubusercontent.com/68669102/211182762-89147782-3ca2-4696-afc0-345c0f90178e.PNG)
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+## Database Architecture
 
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](LICENSE).
+The database architecture can be found @ [here](https://lucid.app/lucidchart/0f7b9837-04d1-4c08-a647-aa9e68718f17/edit?viewport_loc=-125%2C-73%2C2468%2C1154%2C0_0&invitationId=inv_2865823c-5632-4e8c-81df-5090b3207a12).
