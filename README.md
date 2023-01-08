@@ -8,7 +8,9 @@ This repository contains the API logic for a FoodTech Application
 A live deployment of this application can be found @ https://f-c3nm.onrender.com
 
 ## Documentation
-The documentation of this application can be found @ https://f-c3nm.onrender.com/api/docs
+The documentation of this application can be found @:
+<li>Open Api @ https://f-c3nm.onrender.com/api/docs</li>
+<li>Postman @ https://github.com/TosinJs/food-api/blob/master/Food%20API.postman_collection.json </li>
 
 ![Docs](https://user-images.githubusercontent.com/68669102/211183020-bb8f4d80-c769-4ae1-9274-cb9154ff5c27.PNG)
 
