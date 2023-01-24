@@ -1,8 +1,7 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import {
   DataError,
   ForeignKeyViolationError,
-  ModelClass,
   UniqueViolationError,
 } from 'objection';
 import { v4 as uuidv4 } from 'uuid';
@@ -15,11 +14,12 @@ import {
   BadRequestError,
   InternalServerError,
 } from 'src/utils/serviceErrorBuilder.utils';
+import { DBAddonsService } from '../../database/service/db.addons';
 
 @Injectable()
 export class AddonsService {
   constructor(
-    @Inject('AddonsModel') private modelClass: ModelClass<AddonsModel>,
+    private dbService: DBAddonsService,
     private categoriesService: CategoriesService,
   ) {}
 
@@ -54,11 +54,7 @@ export class AddonsService {
     createAddonDto.category ? (newAddon.categoryId = categoryId) : null;
 
     try {
-      const createdAddon = await this.modelClass
-        .query()
-        .insert(newAddon)
-        .returning('*');
-
+      const createdAddon = await this.dbService.insert(newAddon);
       return createdAddon;
     } catch (error) {
       if (error instanceof UniqueViolationError) {
@@ -82,10 +78,7 @@ export class AddonsService {
 
   async findAll(brandId: string): Promise<AddonsModel[]> {
     try {
-      const addons = await this.modelClass
-        .query()
-        .where('addons.brandId', brandId)
-        .withGraphFetched('categories');
+      const addons = await this.dbService.getAddons({ brandId });
       return addons;
     } catch (error) {
       if (error instanceof DataError) {
@@ -101,10 +94,7 @@ export class AddonsService {
 
   async findOne(brandId: string, addonId: string): Promise<AddonsModel> {
     try {
-      const res = await this.modelClass
-        .query()
-        .findOne({ id: addonId, brandId })
-        .withGraphFetched('categories');
+      const res = await this.dbService.getAddon({ id: addonId, brandId });
       return res;
     } catch (error) {
       if (error instanceof DataError) {
@@ -149,11 +139,10 @@ export class AddonsService {
     updateAddonDto.category ? (updatedAddon.categoryId = categoryId) : null;
 
     try {
-      const res = await this.modelClass
-        .query()
-        .findOne({ id: addonId, brandId })
-        .patch(updatedAddon)
-        .returning(['*']);
+      const res = await this.dbService.updateAddon(
+        { id: addonId, brandId },
+        updatedAddon,
+      );
 
       return res;
     } catch (error) {
@@ -170,10 +159,7 @@ export class AddonsService {
 
   async delete(brandId: string, addonId: string): Promise<number> {
     try {
-      const res = await this.modelClass
-        .query()
-        .delete()
-        .where({ id: addonId, brandId });
+      const res = await this.dbService.deleteAddon({ id: addonId, brandId });
       return res;
     } catch (error) {
       if (error instanceof DataError) {

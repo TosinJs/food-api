@@ -1,8 +1,8 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { v4 as uuidv4 } from 'uuid';
 import { CreateUserDto } from '../dto/create-user.dto';
 import { LoginUserDto } from '../dto/login-user.dto';
-import { ModelClass, UniqueViolationError } from 'objection';
+import { UniqueViolationError } from 'objection';
 import { EncryptService } from './encrypt.service';
 import { JwtTokenService } from './jwt.service';
 import { Role } from 'src/types/enum';
@@ -12,11 +12,12 @@ import {
   InternalServerError,
   BadRequestError,
 } from 'src/utils/serviceErrorBuilder.utils';
+import { DBUsersService } from '../database/service/db.users';
 
 @Injectable()
 export class UsersService {
   constructor(
-    @Inject('UsersModel') private modelClass: ModelClass<UsersModel>,
+    private dbService: DBUsersService,
     private encryptService: EncryptService,
     private jwtService: JwtTokenService,
   ) {}
@@ -31,7 +32,7 @@ export class UsersService {
     };
 
     try {
-      await this.modelClass.query().insert(newUser).returning('*');
+      await this.dbService.insert(newUser);
     } catch (error) {
       if (error instanceof UniqueViolationError) {
         throw new ConfilctError(
@@ -57,11 +58,11 @@ export class UsersService {
   async login(loginUserDto: LoginUserDto) {
     const { username, password } = loginUserDto;
 
-    const result = await this.modelClass
-      .query()
-      .select('password', 'role')
-      .where({ username })
-      .first();
+    const result = await this.dbService.getUser(
+      { username },
+      'password',
+      'role',
+    );
 
     if (!result) {
       throw new BadRequestError(

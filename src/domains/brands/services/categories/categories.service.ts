@@ -1,8 +1,7 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import {
   DataError,
   ForeignKeyViolationError,
-  ModelClass,
   UniqueViolationError,
 } from 'objection';
 import { v4 as uuidv4 } from 'uuid';
@@ -13,12 +12,11 @@ import {
   ConfilctError,
   InternalServerError,
 } from 'src/utils/serviceErrorBuilder.utils';
+import { DBCategoriesService } from '../../database/service/db.categories';
 
 @Injectable()
 export class CategoriesService {
-  constructor(
-    @Inject('CategoriesModel') private modelClass: ModelClass<CategoriesModel>,
-  ) {}
+  constructor(private dbService: DBCategoriesService) {}
 
   async create(brandId: string, createCategoryDto: CreateCategoryDto) {
     const newCategory: Partial<CategoriesModel> = {
@@ -27,7 +25,7 @@ export class CategoriesService {
       brandId,
     };
     try {
-      const category = await this.modelClass.query().insert(newCategory);
+      const category = await this.dbService.insert(newCategory);
       return category;
     } catch (error) {
       if (error instanceof UniqueViolationError) {
@@ -51,7 +49,7 @@ export class CategoriesService {
 
   async findAll(brandId: string): Promise<CategoriesModel[]> {
     try {
-      const categories = await this.modelClass.query().where({ brandId });
+      const categories = await this.dbService.getCategories({ brandId });
       return categories;
     } catch (error) {
       if (error instanceof DataError) {
@@ -67,11 +65,10 @@ export class CategoriesService {
 
   async findByNameAndBrand(category: string, brandId: string) {
     try {
-      const id = await this.modelClass
-        .query()
-        .select('id')
-        .where({ name: category, brandId })
-        .first();
+      const id = await this.dbService.getCategoryByNameAndBrand(
+        { name: category, brandId },
+        ['id'],
+      );
       return id;
     } catch (error) {
       throw new InternalServerError(error);

@@ -9,6 +9,9 @@ import { RolesGuard } from './guards/roles.guards';
 import { NestModule } from '@nestjs/common/interfaces/modules';
 import { VerifyIDToken } from './middleware/auth.middleware';
 import { CategoriesController } from './controllers/categories/categories.controller';
+import { DBAddonsService } from './database/service/db.addons';
+import { DBBrandsService } from './database/service/db.brands';
+import { DBCategoriesService } from './database/service/db.categories';
 
 @Module({
   controllers: [BrandsController, AddonsController, CategoriesController],
@@ -16,6 +19,9 @@ import { CategoriesController } from './controllers/categories/categories.contro
     BrandsService,
     AddonsService,
     CategoriesService,
+    DBAddonsService,
+    DBBrandsService,
+    DBCategoriesService,
     {
       provide: APP_GUARD,
       useClass: RolesGuard,

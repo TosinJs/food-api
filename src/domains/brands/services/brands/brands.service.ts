@@ -1,19 +1,18 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { v4 as uuidv4 } from 'uuid';
 import { CreateBrandDto } from '../../dto/brands/create-brand.dto';
-import { DataError, ModelClass, UniqueViolationError } from 'objection';
+import { DataError, UniqueViolationError } from 'objection';
 import { BrandsModel } from '../../database/models/brands.model';
 import {
   BadRequestError,
   ConfilctError,
   InternalServerError,
 } from 'src/utils/serviceErrorBuilder.utils';
+import { DBBrandsService } from '../../database/service/db.brands';
 
 @Injectable()
 export class BrandsService {
-  constructor(
-    @Inject('BrandsModel') private modelClass: ModelClass<BrandsModel>,
-  ) {}
+  constructor(private dbService: DBBrandsService) {}
 
   async create(createBrandDto: CreateBrandDto) {
     const newBrand: Partial<BrandsModel> = {
@@ -22,10 +21,7 @@ export class BrandsService {
       description: createBrandDto.description,
     };
     try {
-      const brand = await this.modelClass
-        .query()
-        .insert(newBrand)
-        .returning('*');
+      const brand = await this.dbService.insert(newBrand);
       return brand;
     } catch (error) {
       if (error instanceof UniqueViolationError) {
@@ -41,7 +37,7 @@ export class BrandsService {
 
   async findAll(): Promise<BrandsModel[]> {
     try {
-      const brands = await this.modelClass.query();
+      const brands = await this.dbService.getBrands();
       return brands;
     } catch (error) {
       if (error instanceof DataError) {
