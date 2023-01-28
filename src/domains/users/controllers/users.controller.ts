@@ -2,7 +2,7 @@ import { Controller, Post, Body, HttpStatus } from '@nestjs/common';
 import { UsersService } from '../services/users.service';
 import { CreateUserDto } from '../dto/create-user.dto';
 import { LoginUserDto } from '../dto/login-user.dto';
-import { createSuccessResponse } from 'src/utils/responseBuilder.utils';
+import { createSuccessResponse } from '../../../utils/responseBuilder.utils';
 import { ApiTags } from '@nestjs/swagger';
 
 @ApiTags('Users')

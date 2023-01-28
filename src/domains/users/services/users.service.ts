@@ -5,13 +5,13 @@ import { LoginUserDto } from '../dto/login-user.dto';
 import { UniqueViolationError } from 'objection';
 import { EncryptService } from './encrypt.service';
 import { JwtTokenService } from './jwt.service';
-import { Role } from 'src/types/enum';
+import { Role } from '../../../types/enum';
 import { UsersModel } from '../database/models/users.models';
 import {
   ConfilctError,
   InternalServerError,
   BadRequestError,
-} from 'src/utils/serviceErrorBuilder.utils';
+} from '../../../utils/serviceErrorBuilder.utils';
 import { DBUsersService } from '../database/service/db.users';
 
 @Injectable()
@@ -46,7 +46,7 @@ export class UsersService {
 
     const token = await this.jwtService.generateIdToken(
       {
-        id: '1',
+        id: newUser.id,
         username: createUserDto.username,
         role: Role.User,
       },
@@ -60,6 +60,7 @@ export class UsersService {
 
     const result = await this.dbService.getUser(
       { username },
+      'id',
       'password',
       'role',
     );
@@ -80,7 +81,7 @@ export class UsersService {
 
     const token = await this.jwtService.generateIdToken(
       {
-        id: '1',
+        id: result.id,
         username: loginUserDto.username,
         role: result.role,
       },
